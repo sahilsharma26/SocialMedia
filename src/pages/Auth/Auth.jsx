@@ -23,39 +23,39 @@ function LogIn() {
   }, []);
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+  e.preventDefault(); // Prevent the default form submission
 
-    const formData = {
-      username: username,
-      password: password
-    };
-
-    console.log("FormData", formData);
-    try {
-      const response = await fetch('https://your-vercel-app.vercel.app/api/users/login', { // Updated URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const resp = await response.json();
-        localStorage.setItem("userId", resp.data._id);
-        localStorage.setItem("image", resp.data.img);
-        localStorage.setItem("followersList", resp.data.followersList);
-        localStorage.setItem("name", `${resp.data.firstName} ${resp.data.lastName}`);
-        navigate("/home");
-        console.log('User signed up successfully', resp.data);
-      } else {
-        const errorData = await response.json();
-        console.error('Error:', errorData.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  const formData = {
+    username: username,
+    password: password
   };
+
+  console.log("FormData", formData);
+  try {
+    const response = await fetch('https://socialify-rho.vercel.app/api/login', { // Updated URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      const resp = await response.json();
+      localStorage.setItem("userId", resp.data._id);
+      localStorage.setItem("image", resp.data.img);
+      localStorage.setItem("followersList", resp.data.followersList);
+      localStorage.setItem("name", `${resp.data.firstName} ${resp.data.lastName}`);
+      navigate("/home");
+      console.log('User signed up successfully', resp.data);
+    } else {
+      const errorData = await response.json();
+      console.error('Error:', errorData.error);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
   return (
     <div className="a-right">
@@ -111,36 +111,36 @@ function Authenticate() {
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+ const handleSignup = async (event) => {
+  event.preventDefault(); // Prevent the default form submission
 
-    const formData = {
-      firstName: firstName,
-      lastName: lastname,
-      username: username,
-      password: password
-    };
-
-    console.log("FormData", formData);
-    try {
-      const response = await fetch('https://your-vercel-app.vercel.app/api/users/signup', { // Updated URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log('User signed up successfully');
-      } else {
-        const errorData = await response.json();
-        console.error('Error:', errorData.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  const formData = {
+    firstName: firstName,
+    lastName: lastname,
+    username: username,
+    password: password
   };
+
+  console.log("FormData", formData);
+  try {
+    const response = await fetch('https://socialify-rho.vercel.app/api/signup', { // Updated URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      console.log('User signed up successfully');
+    } else {
+      const errorData = await response.json();
+      console.error('Error:', errorData.error);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
   return (
     <div className="a-right">
