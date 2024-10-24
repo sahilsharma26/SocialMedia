@@ -1,44 +1,40 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const cors = require("cors");
 const postApi = require("./routes/post");
 const userApi = require("./routes/user");
 const profileApi = require("./routes/profile");
-const bodyparser  = require("body-parser")
+const bodyparser = require("body-parser");
 
 const app = express();
-const PORT = process.env.PORT || 8080;
-app.use(cors({
-  origin: ['http://localhost:3000']
-}));
-app.use(bodyparser.urlencoded({ extended: true }))
-app.use(bodyparser.json())
+
+app.use(cors()); // Add this line to enable CORS
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
 app.use(express.json());
 app.use("/api/posts", postApi);
 app.use("/api/users", userApi);
-app.use("/api/profile",profileApi);
+app.use("/api/profile", profileApi);
 
 app.get("/", (req, res) => {
   res.send("Hello from Express!");
 });
 
+// Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://root:root@cluster0.0mlseyi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+   "mongodb+srv://lostasauchi:jZjjV2ifEgwS2weh@cluster0.xftf9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
   {
     bufferCommands: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
-
   }
 )
-  .then((client) => {
+  .then(() => {
     console.log("Connected to MongoDB Atlas");
-
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
-    });
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB Atlas", err);
   });
+
+// Export the app
+module.exports = app;
